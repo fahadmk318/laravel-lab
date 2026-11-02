@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -21,16 +22,27 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        $existingStudent = Student::where('roll_no', $request->input('roll_no'))->first();
+
         $validated = $request->validate([
-            'roll_no' => 'required|unique:students,roll_no',
+            'roll_no' => [
+                'required',
+                Rule::unique('students', 'roll_no')->ignore($existingStudent),
+            ],
             'name' => 'required',
-            'email' => 'required|email|unique:students,email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('students', 'email')->ignore($existingStudent),
+            ],
             'department' => 'required',
             'semester' => 'required|integer|min:1|max:12',
             'cgpa' => 'nullable|numeric|min:0|max:10',
         ]);
 
-        $student = Student::create($validated);
+        $student = $existingStudent
+            ? tap($existingStudent)->update($validated)
+            : Student::create($validated);
 
         return redirect()
             ->route('students.show', $student)

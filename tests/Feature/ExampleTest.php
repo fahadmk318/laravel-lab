@@ -79,6 +79,15 @@ class ExampleTest extends TestCase
         $this->get("/students/{$student->id}")
             ->assertOk()
             ->assertSee('Student saved successfully!');
+
+        $this->post('/students', [
+            'roll_no' => 'CS23-100',
+            'name' => 'New Student',
+            'email' => 'new.student@example.com',
+            'department' => 'CSE',
+            'semester' => 7,
+            'cgpa' => 9.10,
+        ])->assertRedirect(route('students.show', $student));
     }
 
     public function test_student_id_and_roll_bindings_return_students_or_404(): void
