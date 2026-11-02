@@ -68,14 +68,15 @@ class ExampleTest extends TestCase
             'cgpa' => 9.10,
         ]);
 
-        $response->assertRedirect('/students');
+        $student = Student::where('roll_no', 'CS23-100')->firstOrFail();
+        $response->assertRedirect(route('students.show', $student));
         $response->assertSessionHas('status', 'Student saved successfully!');
         $this->assertDatabaseHas('students', [
             'roll_no' => 'CS23-100',
             'email' => 'new.student@example.com',
         ]);
 
-        $this->get('/students')
+        $this->get("/students/{$student->id}")
             ->assertOk()
             ->assertSee('Student saved successfully!');
     }

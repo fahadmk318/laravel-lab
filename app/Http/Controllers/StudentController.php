@@ -30,9 +30,10 @@ class StudentController extends Controller
             'cgpa' => 'nullable|numeric|min:0|max:10',
         ]);
 
-        Student::create($validated);
+        $student = Student::create($validated);
 
-        return redirect('/students')
+        return redirect()
+            ->route('students.show', $student)
             ->with('status', 'Student saved successfully!');
     }
 
