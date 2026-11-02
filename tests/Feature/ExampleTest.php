@@ -88,6 +88,15 @@ class ExampleTest extends TestCase
             'semester' => 7,
             'cgpa' => 9.10,
         ])->assertRedirect(route('students.show', $student));
+
+        $this->post('/students', [
+            'roll_no' => 'CS23-101',
+            'name' => 'New Student',
+            'email' => 'new.student@example.com',
+            'department' => 'CSE',
+            'semester' => 7,
+            'cgpa' => 9.10,
+        ])->assertRedirect(route('students.show', $student));
     }
 
     public function test_student_id_and_roll_bindings_return_students_or_404(): void

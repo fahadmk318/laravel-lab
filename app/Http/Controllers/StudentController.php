@@ -22,7 +22,9 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        $existingStudent = Student::where('roll_no', $request->input('roll_no'))->first();
+        $existingStudent = Student::where('roll_no', $request->input('roll_no'))
+            ->orWhere('email', $request->input('email'))
+            ->first();
 
         $validated = $request->validate([
             'roll_no' => [
