@@ -25,5 +25,12 @@
         <strong>The database is ready:</strong>
         the <code>students</code> table has {{ \App\Models\Student::count() }} sample rows.
     </div>
+
+    <div class="box">
+        <strong>MVC routes:</strong>
+        <a href="{{ url('/hello/Fahad') }}">Say hello</a>
+        ·
+        <a href="{{ url('/about') }}">About</a>
+    </div>
 </body>
 </html>

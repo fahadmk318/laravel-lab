@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Student;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Route::bind('your_roll', function ($value) {
+            return Student::where('roll_no', $value)
+                ->orWhere('roll_no', 'CS23-'.$value)
+                ->firstOrFail();
+        });
     }
 }

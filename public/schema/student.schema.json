@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Students",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "roll_no": {
+                "type": "string"
+            },
+            "name": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string",
+                "format": "email"
+            },
+            "department": {
+                "type": "string"
+            },
+            "semester": {
+                "type": "integer"
+            },
+            "cgpa": {
+                "type": [
+                    "number",
+                    "null"
+                ]
+            }
+        },
+        "required": [
+            "id",
+            "roll_no",
+            "name",
+            "email",
+            "department",
+            "semester"
+        ]
+    }
+}
